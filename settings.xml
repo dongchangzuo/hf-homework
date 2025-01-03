@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">
+    <mirrors>
+        <mirror>
+            <id>aliyun</id>
+            <mirrorOf>central</mirrorOf>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </mirror>
+
+        <mirror>
+            <id>ustc</id>
+            <mirrorOf>central</mirrorOf>
+            <url>https://mirrors.ustc.edu.cn/maven/</url>
+        </mirror>
+
+        <mirror>
+            <id>huaweicloud</id>
+            <mirrorOf>central</mirrorOf>
+            <url>https://repo.huaweicloud.com/repository/maven/</url>
+        </mirror>
+
+        <mirror>
+            <id>tencent</id>
+            <mirrorOf>central</mirrorOf>
+            <url>https://mirrors.tencent.com/maven/</url>
+        </mirror>
+    </mirrors>
+</settings>

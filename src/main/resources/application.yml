@@ -1,0 +1,59 @@
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    enable:
+      all: true
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: kafka-service.kafaka.svc.cluster.local:9092
+    consumer:
+      bootstrap-servers: kafka-service.kafaka.svc.cluster.local:9092
+      group-id: fraud-detection-group
+      enable-auto-commit: true
+      auto-offset-reset: earliest
+    listener:
+      missing-topics-fatal: false
+
+  datasource:
+    url: jdbc:mysql://mysql-service.mysql.svc.cluster.local:3306/fraud_detection?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: rootpassword
+    driver-class-name: com.mysql.jdbc.Driver
+
+  mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: org.example.fraud.model
+
+  redis:
+    host: redis-service.redis.svc.cluster.local
+    port: 6379
+    jedis:
+      pool:
+        max-active: 10
+        max-wait: 5
+
+logging:
+  level:
+    root: INFO
+    org.example.fraud: DEBUG
+
+
+fraud:
+  rules:
+    highTransactionFrequency:
+      timeWindowMinutes: 5
+      maxTransactions: 10
+    amountRule:
+      threshold: 100000
+
+
+
+
