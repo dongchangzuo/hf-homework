@@ -15,7 +15,9 @@ def load_expected_data():
     global expected_data
     try:
         with open(EXPECTED_JSON_FILE, 'r') as file:
-            expected_data = json.load(file)
+            # 将 JSON 数组转换为字典，键为 transactionId
+            raw_data = json.load(file)
+            expected_data = {item['transactionId']: item for item in raw_data if 'transactionId' in item}
             print(f"Loaded {len(expected_data)} records from {EXPECTED_JSON_FILE}.")
     except FileNotFoundError:
         print(f"Error: {EXPECTED_JSON_FILE} not found.")
@@ -37,15 +39,13 @@ def consume_messages():
 
     print(f"Listening to topic: {KAFKA_TOPIC}")
     for message in consumer:
-        print
         if not check_message_in_expected(message.value):
             print(f"Message not found in expected.json: {message.value}")
 
 def check_message_in_expected(message):
     transaction_id = message.get('transactionId')
-    if transaction_id and transaction_id in expected_data:
-        return True
-    return False
+    # 直接在字典中查找 transactionId
+    return transaction_id in expected_data
 
 def signal_handler(sig, frame):
     print("\nStopping consumer...")
